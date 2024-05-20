@@ -13,6 +13,13 @@ public class Swipe : MonoBehaviour
     public float minMoveSpeed = 2f; // Velocità minima
     public float maxMoveSpeed = 10f; // Velocità massima
 
+    public GameManager gameManager;
+    public GameObject prefab;
+
+    void Start()
+    {
+        InstantiatePrefab();
+    }
     void Update()
     {
         if (Input.touchCount > 0)
@@ -57,6 +64,11 @@ public class Swipe : MonoBehaviour
         }
     }
 
+    void InstantiatePrefab()
+    {
+        if(prefab.IsDestroyed())
+            Instantiate(prefab, Vector3.zero, Quaternion.identity);
+    }
     void MoveObject(float swipeDistance)
     {
         // Calcola la velocità di movimento in base alla distanza percorsa durante lo swipe
@@ -76,7 +88,8 @@ public class Swipe : MonoBehaviour
         if (collision.gameObject.name == "Sofa")
         {
             Debug.Log("Complete the minigame!!!!");
-            Destroy(gameObject);
+            Destroy(prefab);
+            gameManager.OnGameEnd(true);
         }
 
         // Puoi eseguire qui altre azioni, ad esempio cambiare il colore dell'oggetto, 

@@ -6,6 +6,7 @@ public class TouchIt : MonoBehaviour
 {
         // Layer mask for objects we want to consider for touch
     public LayerMask touchInputMask;
+    public GameManager gameManager;
     void Update()
     {
          // Check if the left mouse button is pressed
@@ -13,18 +14,18 @@ public class TouchIt : MonoBehaviour
         {
             // Convert mouse position to a ray
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
             // Perform raycast to check if any object is touched
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, touchInputMask))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, touchInputMask))
             {
                 // Retrieve the exact GameObject that was hit by the raycast
                 GameObject touchedObject = hit.transform.gameObject;
 
                 // Check the name of the touched object and change the log accordingly
-                if (touchedObject.name == "Nera")
+                if (touchedObject.name == "Black")
                 {
-                    Debug.Log("You touched the object named Black");
+                    Debug.Log("You Won!!!!");
+                    gameManager.OnGameEnd(true);
                 }
                 else
                 {

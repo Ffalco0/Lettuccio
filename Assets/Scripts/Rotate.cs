@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class Rotate : MonoBehaviour
@@ -12,6 +13,8 @@ public class Rotate : MonoBehaviour
 
     // Initial device orientation
     private Quaternion initialRotation;
+
+    public GameManager gameManager;
 
     void Start()
     {
@@ -43,6 +46,11 @@ public class Rotate : MonoBehaviour
 
             // Rotate the object on the Z axis with a specified speed
             transform.rotation = Quaternion.Euler(0, 0, targetAngleZ * rotationSpeed);
+        }
+
+        if(gameManager.GetTimer() == 0)
+        {
+            gameManager.OnGameEnd(true);
         }
     }
 }
