@@ -7,17 +7,20 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public GameObject[] gameObjects; // Array of game objects to switch between
-    public TextMeshProUGUI timerText; // UI Text element to display the timer
-    public float gameDuration = 10f; // Game duration in seconds
-
-    private int currentIndex = 0;
+    //TIME SECTION
     private float timer;
-    private bool isGameActive = true;
+    public Image timebarImage;
+    public float gameDuration = 10f; // Game duration in seconds
+    
+    private int currentIndex = 0;
+    private bool isGameActive = false;
+
+    public GameObject startScreen;
+    public GameObject timerObj;
 
     void Start()
     {
-        timer = gameDuration;
-        UpdateActiveObject();
+        timer = gameDuration;   
     }
 
     void Update()
@@ -25,12 +28,26 @@ public class GameManager : MonoBehaviour
         if (isGameActive)
         {
             UpdateTimer();
+            UpdateActiveObject();
         }
     }
 
     public float GetTimer()
     {
         return timer;
+    }
+
+    public void StartSession()
+    {
+        startScreen.SetActive(false);
+        timerObj.SetActive(true);
+        isGameActive = true;
+    }
+    public void EndSession()
+    {
+        startScreen.SetActive(true);
+        timerObj.SetActive(false);
+        
     }
 
     void UpdateActiveObject()
@@ -50,17 +67,21 @@ public class GameManager : MonoBehaviour
     void UpdateTimer()
     {
         timer -= Time.deltaTime;
+
+        float remainingTime = Mathf.Max(0.0f, timer - Time.time);
+        float normalizedTime = remainingTime / timer;
+        timebarImage.transform.localScale = new Vector3(normalizedTime, 1.0f, 1.0f);
+
         if (timer <= 0)
         {
             timer = 0;
             EndGame(false);
         }
-
-        timerText.text = Mathf.Ceil(timer).ToString();
     }
     void EndGame(bool hasWon)
     {
         isGameActive = false;
+
         OnGameEnd(hasWon);
     }
 

@@ -27,11 +27,11 @@ public class TouchIt : MonoBehaviour
                     Debug.Log("You Won!!!!");
                     gameManager.OnGameEnd(true);
                 }
-                else
-                {
-                    Debug.Log("You Lose");
-                }
             }
+        }
+        else
+        {
+            Debug.Log("You Lose");
         }
     }
 }
