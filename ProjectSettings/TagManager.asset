@@ -9,6 +9,9 @@ TagManager:
   - win
   - Biscotto
   - Bicchiere
+  - BiscottoBagnato
+  - BiscottoRotto
+  - gocciaspawn
   layers:
   - Default
   - TransparentFX

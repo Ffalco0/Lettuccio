@@ -2,51 +2,29 @@ using UnityEngine;
 
 public class CollisionTracker : MonoBehaviour
 {
-    private float timer = 0f;
-    private bool timerStarted = false;
-
-    // Public variables for Biscotto and BiscottoBagnato
     public GameObject Biscotto;
     public GameObject BiscottoBagnato;
-    public GameObject BiscottoRotto;
 
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        if (Biscotto.transform.position.y <= -0.4f)
+        Debug.Log("Collision detected with: " + other.gameObject.name);
+
+        if (other.gameObject == Biscotto)
         {
-            if (!timerStarted)
-            {
-                timerStarted = true;
-                timer = 0f; 
-            }
-
-            timer += Time.deltaTime;
-            if (timer >= 3f && timer <= 4f)
-            {
-                Debug.Log("YOU WIN");
-
-                
-                Vector3 newPosition = BiscottoBagnato.transform.position;
-                newPosition.y = Biscotto.transform.position.y;
-                BiscottoBagnato.transform.position = newPosition;
-
-                
-                BiscottoBagnatoMovement biscottoBagnatoMovement = BiscottoBagnato.GetComponent<BiscottoBagnatoMovement>();
-                if (biscottoBagnatoMovement != null)
-                {
-                    
-                    biscottoBagnatoMovement.upTargetY = BiscottoBagnato.transform.position.y;
-                }
-
-                
-                BiscottoBagnato.SetActive(true);
-                Biscotto.SetActive(false);
-            }
+            Debug.Log("Biscotto collided with Bicchiere");
+            SwapBiscottos();
         }
-        else
-        {
-            timerStarted = false;
-            timer = 0f; 
-        }
+    }
+
+    void SwapBiscottos()
+    {
+        // Ensure Biscotto is deactivated and BiscottoBagnato is activated correctly
+        Biscotto.GetComponent<BiscottoMovement>().SetActiveState(false);
+        BiscottoBagnato.transform.position = Biscotto.transform.position;
+        BiscottoBagnato.SetActive(true);
+        BiscottoBagnato.GetComponent<BiscottoMovement>().SetActiveState(true);
+        Biscotto.SetActive(false);
+
+        Debug.Log("Swapped Biscotto with BiscottoBagnato");
     }
 }
