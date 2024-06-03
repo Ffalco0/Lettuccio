@@ -3,16 +3,24 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Raccoon
+  - Monster
+  - win
+  - Biscotto
+  - Bicchiere
+  - BiscottoBagnato
+  - BiscottoRotto
+  - gocciaspawn
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BicchiereBordo
   - Water
   - UI
-  - 
-  - 
+  - BicchiereLatte
+  - Biscotto
   - 
   - 
   - 
@@ -40,4 +48,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Biscotto
+    uniqueID: 655002557
+    locked: 0
+  - name: BicchiereBordo
+    uniqueID: 1236502619
+    locked: 0
+  - name: BicchiereLatte
+    uniqueID: 3561133641
     locked: 0
