@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class RaccoonController : MonoBehaviour, IPointerClickHandler
+public class RaccoonController : MonoBehaviour
 {
     public float upwardSpeed = 1f;
     public float moveDistance = 0.1f;
@@ -12,15 +12,11 @@ public class RaccoonController : MonoBehaviour, IPointerClickHandler
     {
         transform.Translate(Vector3.up * upwardSpeed * Time.deltaTime);
 
-        if (isMoving)
+        if (Input.GetMouseButton(0))
         {
             transform.Translate(Vector3.down * speed * Time.deltaTime);
+            MoveRaccoon();
         }
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        MoveRaccoon();
     }
 
     public void MoveRaccoon()

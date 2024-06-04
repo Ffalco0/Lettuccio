@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class RaccoonWinCollision : MonoBehaviour
 {
+    public GameObject gameManager;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("win"))
@@ -13,6 +14,6 @@ public class RaccoonWinCollision : MonoBehaviour
 
     private void EndGame()
     {
-        Application.Quit();
+        //gameManager.WinMinigame();
     }
 }

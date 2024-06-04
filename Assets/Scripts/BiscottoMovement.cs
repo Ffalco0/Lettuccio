@@ -13,24 +13,29 @@ public class BiscottoMovement : MonoBehaviour
 
     private GameObject gocciaSpawnPoint;
     public GameObject biscottoRotto;
+    public GameObject biscottoDuro;
     public GameObject gocciaPrefab;
     private bool won = false;
+    private bool loseFast = false;
+    private bool loseLate = false;
     void Start()
-     {{
-     
+    {
+        
         gocciaSpawnPoint = GameObject.FindWithTag("gocciaspawn");
+        
+        if (gameObject.CompareTag("BiscottoBagnato") || gameObject.CompareTag("BiscottoRotto"))
+        {
+            originalPosition = new Vector3(transform.position.x, 3f, transform.position.z);
         }
-{
-    if (gameObject.CompareTag("BiscottoBagnato") || gameObject.CompareTag("BiscottoRotto"))
-    {
-        originalPosition = new Vector3(transform.position.x, 3f, transform.position.z);
+        else
+        {
+            originalPosition = transform.position;
+        }
+
+        won = false;
+        loseFast = false;
+        loseLate = false; 
     }
-    else
-    {
-        originalPosition = transform.position;
-    }
-}
-}
 
 
     void Update()
@@ -93,7 +98,12 @@ public class BiscottoMovement : MonoBehaviour
             else if (timer > 4f)
             {
                 // Player loses if timer exceeds 6 seconds
-                won = false;
+                loseLate = true;
+                break; // Exit the loop
+            }
+            else
+            {
+                loseFast = true;
                 break; // Exit the loop
             }
 
@@ -110,18 +120,15 @@ public class BiscottoMovement : MonoBehaviour
         else
         {
             Debug.Log("YOU LOSE");
-
             // Deactivate BiscottoBagnato
             gameObject.SetActive(false);
 
-            // Activate BiscottoRotto directly using the reference
-            if (biscottoRotto != null)
+            if(loseFast)
+            {
+                biscottoDuro.SetActive(true);
+            }else if (loseLate)
             {
                 biscottoRotto.SetActive(true);
-            }
-            else
-            {
-                Debug.LogError("BiscottoRotto reference is not set.");
             }
         }
     }

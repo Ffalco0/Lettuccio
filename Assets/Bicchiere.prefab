@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5559663786686545521}
   - component: {fileID: 9133586096915179986}
   - component: {fileID: 2513183404649157286}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Bicchiere
   m_TagString: Bicchiere
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10.310912, y: 5.4887476, z: 0}
+  m_Size: {x: 10.310912, y: 7.9870553, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &2513183404649157286
 SpriteRenderer:

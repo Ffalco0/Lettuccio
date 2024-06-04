@@ -5,52 +5,35 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
-    // Rotation speed of the object
-    public float rotationSpeed = 1.0f;
+    // References to game objects
+    public GameObject cone;
+    public GameObject[] scoops;
 
-    // Check if gyroscope is available on the device
-    private bool gyroSupported;
-
-    // Initial device orientation
-    private Quaternion initialRotation;
-
-    public GameManager gameManager;
-
-    void Start()
-    {
-        // Check if gyroscope is supported on the device
-        gyroSupported = SystemInfo.supportsGyroscope;
-
-        // If gyroscope is supported, initialize its orientation
-        if (gyroSupported)
-        {
-            Input.gyro.enabled = true; // Enable the gyroscope
-            initialRotation = Quaternion.identity; // Initial device orientation
-        }
-        else
-        {
-            Debug.Log("Gyroscope not supported on this device.");
-        }
-    }
+    // Constants for movement and sensitivity
+    const float maxRotation = 15f; // Maximum rotation angle for the cone
+    const float sensitivity = 5f; // Sensitivity for phone tilt to cone movement
 
     void Update()
     {
-        // If gyroscope is supported, rotate the object based on the rotation on the Z axis
-        if (gyroSupported)
+        // Get the phone's gyroscope rotation
+        float tilt = -Input.gyro.rotationRate.y * sensitivity;
+
+        // Limit the tilt to avoid exceeding the maximum rotation
+        tilt = Mathf.Clamp(tilt, -maxRotation, maxRotation);
+
+        // Rotate the cone based on the tilt
+        cone.transform.Rotate(0f, 0f, -tilt);
+
+        // Check for each scoop if it's falling off the cone
+        foreach (GameObject scoop in scoops)
         {
-            // Get the gyroscope rotation
-            Quaternion gyroRotation = Input.gyro.attitude * initialRotation;
-
-            // Apply rotation only on the Z axis
-            float targetAngleZ = gyroRotation.eulerAngles.z;
-
-            // Rotate the object on the Z axis with a specified speed
-            transform.rotation = Quaternion.Euler(0, 0, targetAngleZ * rotationSpeed);
-        }
-
-        if(gameManager.GetTimer() == 0)
-        {
-            gameManager.OnGameEnd(true);
+            // Check if the scoop's position is below the cone's base
+            if (scoop.transform.position.y < cone.transform.position.y)
+            {
+                // Game Over if a scoop falls
+                Debug.Log("Game Over! Scoop fell off.");
+                // Handle game over logic here (e.g., reset scene, display score, etc.)
+            }
         }
     }
 }

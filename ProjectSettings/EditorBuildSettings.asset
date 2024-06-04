@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/minigameScappa.unity
     guid: a8bca557161e94392b32cfc238346c3d
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 2faa4d65e9af340bc8b6fcb3c42fefec
   m_configObjects: {}

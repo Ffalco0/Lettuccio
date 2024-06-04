@@ -7,7 +7,6 @@ public class MonsterCollision : MonoBehaviour
         if (collision.gameObject.CompareTag("Raccoon"))
         {
             Debug.Log("Raccoon collided with Monster!");
-            SceneLoader.ReloadCurrentScene(); 
         }
     }
 }

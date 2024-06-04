@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8089735190580009988}
   - component: {fileID: 5202843537874892589}
-  - component: {fileID: 7498533118376163156}
-  - component: {fileID: 7563416683656230343}
+  - component: {fileID: 4179644275572392562}
+  - component: {fileID: 3328851413232963034}
   m_Layer: 0
   m_Name: BiscottoRotto
-  m_TagString: Biscotto
+  m_TagString: BiscottoRotto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7498533118376163156
+--- !u!114 &4179644275572392562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,34 +95,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 2792501456872307910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94f553b1b932a4dd39385ec4894a7739, type: 3}
+  m_Script: {fileID: 11500000, guid: b3e24fb49e25e44259da705d39eb466a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Biscotto: {fileID: 0}
---- !u!50 &7563416683656230343
-Rigidbody2D:
-  serializedVersion: 4
+  downSpeed: 2
+  targetY: -0.72
+  returnSpeed: 2
+  biscottoRotto: {fileID: 2792501456872307910}
+  biscottoDuro: {fileID: 0}
+  gocciaPrefab: {fileID: 1291786914656304772, guid: 1ebf7e2291766423183b968638d7c963, type: 3}
+--- !u!114 &3328851413232963034
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2792501456872307910}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910a9de3efaf74b99b17ca9d411c68ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downSpeed: 2
+  targetY: -0.72
+  isMoving: 0
+  returnSpeed: 2
+  originalPosition: {x: 0, y: 0, z: 0}

@@ -9,17 +9,17 @@ public class BiscottoMovementBase : MonoBehaviour
     public Vector3 originalPosition;
 
     void Start()
-{
-    // For BiscottoBagnato and BiscottoRotto, set the original position with Y coordinate at 3
-    if (gameObject.CompareTag("BiscottoBagnato") || gameObject.CompareTag("BiscottoRotto"))
     {
-        originalPosition = new Vector3(transform.position.x, 3f, transform.position.z);
+        // For BiscottoBagnato and BiscottoRotto, set the original position with Y coordinate at 3
+        if (gameObject.CompareTag("BiscottoBagnato") || gameObject.CompareTag("BiscottoRotto"))
+        {
+            originalPosition = new Vector3(transform.position.x, 3f, transform.position.z);
+        }
+        else
+        {
+            originalPosition = transform.position;
+        }
     }
-    else
-    {
-        originalPosition = transform.position;
-    }
-}
 
 
     void Update()

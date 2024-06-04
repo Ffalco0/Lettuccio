@@ -9,7 +9,7 @@ public class TouchIt : MonoBehaviour
     public GameManager gameManager;
     void Update()
     {
-         // Check if the left mouse button is pressed
+        // Check if the left mouse button is pressed
         if (Input.GetMouseButton(0))
         {
             // Convert mouse position to a ray
@@ -22,16 +22,15 @@ public class TouchIt : MonoBehaviour
                 GameObject touchedObject = hit.transform.gameObject;
 
                 // Check the name of the touched object and change the log accordingly
-                if (touchedObject.name == "Black")
+                if (touchedObject.name == "BlackSheep")
                 {
                     Debug.Log("You Won!!!!");
-                    gameManager.OnGameEnd(true);
+                    gameManager.WinMinigame();
+                } else
+                {
+                    Debug.Log("You Lose");
                 }
             }
-        }
-        else
-        {
-            Debug.Log("You Lose");
         }
     }
 }
