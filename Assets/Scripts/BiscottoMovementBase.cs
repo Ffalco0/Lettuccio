@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BiscottoMovementBase : MonoBehaviour
 {
+    /*
     public float downSpeed = 2f;
     public float targetY = -0.72f;
     public bool isMoving = false;
@@ -39,4 +40,5 @@ public class BiscottoMovementBase : MonoBehaviour
         Debug.Log("Button2 pressed");
         isMoving = true;
     }
+    */
 }

@@ -1,152 +1,98 @@
-using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class BiscottoMovement : MonoBehaviour
 {
-    public float downSpeed = 2f;
-    public float targetY = -0.72f;
-    public float returnSpeed = 2f;
-    private Vector3 originalPosition;
-    private bool isActive = true;
-    private bool isTiming = false;
-    private float timer = 0f;
+   public Transform biscuit; 
+    public Transform glass;   
+    public float speed = 2.0f;
+    private Vector3 initialPosition;
+    private bool isReturning = false;
+    private bool isTouched = false;
+    private bool isDeeped = false;
+    //Handle Sprite
+    private SpriteRenderer spriteRenderer;
+    public Sprite biscuitDURO;
+    public Sprite biscuitROTTO;
+    public Sprite biscuitNORMALE;
 
-    private GameObject gocciaSpawnPoint;
-    public GameObject biscottoRotto;
-    public GameObject biscottoDuro;
-    public GameObject gocciaPrefab;
-    private bool won = false;
-    private bool loseFast = false;
-    private bool loseLate = false;
+    //GameManager Script
+    public GameObject gameManagerObject;
+    public GameManager gameManagerScript;
+
+    private float timer = 0f;
     void Start()
     {
-        
-        gocciaSpawnPoint = GameObject.FindWithTag("gocciaspawn");
-        
-        if (gameObject.CompareTag("BiscottoBagnato") || gameObject.CompareTag("BiscottoRotto"))
-        {
-            originalPosition = new Vector3(transform.position.x, 3f, transform.position.z);
-        }
-        else
-        {
-            originalPosition = transform.position;
-        }
-
-        won = false;
-        loseFast = false;
-        loseLate = false; 
+        gameManagerObject = GameObject.Find("GameManager");
+        gameManagerScript = gameManagerObject.GetComponent<GameManager>();
+        initialPosition = biscuit.position;
+        spriteRenderer = biscuit.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = biscuitNORMALE;
     }
-
 
     void Update()
     {
-        if (isActive)
+
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButton(0))
+            isTouched = true;
+            isReturning = false;
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            isTouched = false;
+            isReturning = true;
+            if(isDeeped)
             {
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), downSpeed * Time.deltaTime);
+                CheckResults();
             }
-            else
+
+        }
+
+        if (isTouched && !isDeeped)
+        {
+            biscuit.position = Vector3.MoveTowards(biscuit.position, glass.position, speed * Time.deltaTime);
+        }
+        else if (isReturning)
+        {
+            biscuit.position = Vector3.MoveTowards(biscuit.position, initialPosition, speed * Time.deltaTime);
+            if (biscuit.position == initialPosition)
             {
-                transform.position = Vector3.MoveTowards(transform.position, originalPosition, returnSpeed * Time.deltaTime);
+                isReturning = false;
             }
         }
-    }
 
-    public void SetActiveState(bool state)
-    {
-        isActive = state;
+
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Bicchiere"))
+        if (other.transform == glass)
         {
-            Debug.Log($"{gameObject.name} entered Bicchiere trigger.");
-            if (!isTiming && gameObject.CompareTag("BiscottoBagnato")) // Check if attached to BiscottoBagnato
-            {
-                StartCoroutine(TimingCoroutine());
-            }
+            isDeeped = true;
         }
     }
 
-    void OnTriggerExit(Collider other)
+
+    void CheckResults()
     {
-        if (other.gameObject.CompareTag("Bicchiere"))
+        if(gameManagerScript.GetTime() < 5f)
         {
-            Debug.Log($"{gameObject.name} exited Bicchiere trigger.");
-            StopCoroutine(TimingCoroutine());
-            isTiming = false;
-            timer = 0f;
+            //ScpriteBiscotto DURO
+            spriteRenderer.sprite = biscuitDURO;
         }
-    }
-
-    IEnumerator TimingCoroutine()
-    {
-        isTiming = true;
-        timer = 0f;
-
-        while (isTiming)
+        else if(gameManagerScript.GetTime() > 8.5f)
         {
-            timer += Time.deltaTime;
-
-            if (timer >= 3f && timer <= 4f)
-            {
-                // Player wins if timer is between 3 and 5 seconds
-                won = true;
-            }
-            else if (timer > 4f)
-            {
-                // Player loses if timer exceeds 6 seconds
-                loseLate = true;
-                break; // Exit the loop
-            }
-            else
-            {
-                loseFast = true;
-                break; // Exit the loop
-            }
-
-            yield return null;
-        }
-
-         if (won)
-        {
-            Debug.Log("YOU WIN");
-
-            // Spawn Goccia objects each second at the GocciaSpawn position
-            StartCoroutine(SpawnGoccia());
+            //ScpriteBiscotto ROTTO
+            spriteRenderer.sprite = biscuitROTTO;
         }
         else
         {
-            Debug.Log("YOU LOSE");
-            // Deactivate BiscottoBagnato
-            gameObject.SetActive(false);
-
-            if(loseFast)
-            {
-                biscottoDuro.SetActive(true);
-            }else if (loseLate)
-            {
-                biscottoRotto.SetActive(true);
-            }
+            spriteRenderer.sprite = biscuitNORMALE;
         }
-    }
-    IEnumerator SpawnGoccia()
-    {
-        while (true)
-        {
-            if (gocciaSpawnPoint != null)
-            {
-               
-                Vector3 spawnPosition = new Vector3(gocciaSpawnPoint.transform.position.x, gocciaSpawnPoint.transform.position.y, gocciaSpawnPoint.transform.position.z);
 
-            
-                Instantiate(gocciaPrefab, spawnPosition, Quaternion.identity);
-            }
-
-            yield return new WaitForSeconds(1f); 
-        }
+        isDeeped = false;
     }
 }
-

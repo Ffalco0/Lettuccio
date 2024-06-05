@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     {
         // Start the coroutine
         StartCoroutine(RunMinigames());
-        adManager.LoadAd();
     }
 
     /*
@@ -45,6 +44,7 @@ public class GameManager : MonoBehaviour
         await Login();
     }
     */
+    
 
     IEnumerator RunMinigames()
     {
@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour
             {
                 timer += Time.deltaTime;
                 timebarImage.fillAmount = timer / gameDuration;
-                //Debug.Log($"Timer: {timer}, Fill Amount: {timebarImage.fillAmount}");
                 yield return null;
             }
             
@@ -153,21 +152,13 @@ public class GameManager : MonoBehaviour
     public void WinMinigame()
     {
         DeactivateMinigame(currentIndex);
+        timer = 0f; // Reset timer for the new minigame
+        timebarImage.fillAmount = 0f; // Reset timebar for the new minigame
 
         // Pass to the next minigame
         currentIndex = (currentIndex + 1) % minigames.Length;
         
         ActivateMinigame(currentIndex);
-        timer = 0f; // Reset timer for the new minigame
-        timebarImage.fillAmount = 0f; // Reset timebar for the new minigame
-    }
-
-    void UpdateActiveObject()
-    {
-        for (int i = 0; i < minigames.Length; i++)
-        {
-            minigames[i].SetActive(i == currentIndex);
-        }
     }
 
     enum GameState

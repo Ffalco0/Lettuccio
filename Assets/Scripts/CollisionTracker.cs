@@ -19,10 +19,10 @@ public class CollisionTracker : MonoBehaviour
     void SwapBiscottos()
     {
         // Ensure Biscotto is deactivated and BiscottoBagnato is activated correctly
-        Biscotto.GetComponent<BiscottoMovement>().SetActiveState(false);
+       // Biscotto.GetComponent<BiscottoMovement>().SetActiveState(false);
         BiscottoBagnato.transform.position = Biscotto.transform.position;
         BiscottoBagnato.SetActive(true);
-        BiscottoBagnato.GetComponent<BiscottoMovement>().SetActiveState(true);
+        //BiscottoBagnato.GetComponent<BiscottoMovement>().SetActiveState(true);
         Biscotto.SetActive(false);
 
         Debug.Log("Swapped Biscotto with BiscottoBagnato");

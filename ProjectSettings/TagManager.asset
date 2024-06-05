@@ -21,7 +21,7 @@ TagManager:
   - UI
   - BicchiereLatte
   - Biscotto
-  - 
+  - BackGround
   - 
   - 
   - 
@@ -57,4 +57,7 @@ TagManager:
     locked: 0
   - name: BicchiereLatte
     uniqueID: 3561133641
+    locked: 0
+  - name: BackGround
+    uniqueID: 1620524465
     locked: 0
