@@ -29,10 +29,14 @@ public class GameManager : MonoBehaviour
     string PublicKeyUrl;
     string Timestamp;
 
+    //ADS Manager
+    public InterstitialAd adManager;
+
     void Awake()
     {
         // Start the coroutine
         StartCoroutine(RunMinigames());
+        adManager.LoadAd();
     }
 
     /*
@@ -139,6 +143,8 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        StopAllCoroutines();
+        adManager.ShowAd();
         isGameActive = false;
         minigamesScreen.SetActive(false);
         loseScreen.SetActive(true);
@@ -162,12 +168,6 @@ public class GameManager : MonoBehaviour
         {
             minigames[i].SetActive(i == currentIndex);
         }
-    }
-
-    public void SwitchActiveObject()
-    {
-        currentIndex = (currentIndex + 1) % minigames.Length;
-        UpdateActiveObject();
     }
 
     enum GameState

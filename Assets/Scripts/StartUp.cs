@@ -10,7 +10,7 @@ public class startUp : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            gameManager.StartSession();
+           gameManager.StartSession();
         }
         
     }
