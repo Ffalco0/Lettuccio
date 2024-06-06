@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1044682234952658184}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -7.17, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 0}
   m_ConstrainProportionsScale: 0
@@ -137,9 +137,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7766806110561890035}
-  sprite1: {fileID: 21300000, guid: bf5316c73855d4af283ea8104582f9c2, type: 3}
-  sprite2: {fileID: 21300000, guid: c52ba81de5a934fadba61e76339f0c1a, type: 3}
-  timePerFrame: 0.5
+  sprites:
+  - {fileID: 21300000, guid: bf5316c73855d4af283ea8104582f9c2, type: 3}
+  - {fileID: 21300000, guid: c52ba81de5a934fadba61e76339f0c1a, type: 3}
+  - {fileID: 21300000, guid: 5bb4a6349857e48179575970d7ca4f18, type: 3}
+  - {fileID: 21300000, guid: f0227518d1a3a470096e268af812435f, type: 3}
+  - {fileID: 21300000, guid: 8b0c19e10b6cd411bac91be153f93839, type: 3}
+  timePerSprite: 0.5
 --- !u!1 &1079169770300993763
 GameObject:
   m_ObjectHideFlags: 0

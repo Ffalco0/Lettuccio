@@ -38,12 +38,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(RunMinigames());
     }
 
-    /*
+    
     async void Start()
     {
         await Login();
     }
-    */
+    
     
 
     IEnumerator RunMinigames()

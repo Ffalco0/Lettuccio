@@ -4,26 +4,39 @@ using UnityEngine;
 
 public class renderSprite : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
-    public Sprite sprite1;
-    public Sprite sprite2;
-    public float timePerFrame = 0.5f;
+   public SpriteRenderer spriteRenderer;
+    public List<Sprite> sprites; // List to hold all four sprites
+    public float timePerSprite = 0.5f; // Time to display each sprite
 
+    private int currentSpriteIndex = 0; // Index of the currently displayed sprite
     private float timeElapsed = 0.0f;
-    private bool showSprite1 = true;
 
-    void Update() {
+    void Start()
+    {
+        // Ensure the sprites list is not null or empty
+        if (sprites == null || sprites.Count == 0)
+        {
+            Debug.LogError("No sprites assigned! Please assign four sprites in the Inspector.");
+            return;
+        }
+    }
+
+    void Update()
+    {
         timeElapsed += Time.deltaTime;
 
-        if (timeElapsed >= timePerFrame) {
+        if (timeElapsed >= timePerSprite)
+        {
             timeElapsed = 0.0f;
-            showSprite1 = !showSprite1;
+            currentSpriteIndex++;
 
-            if (showSprite1) {
-                spriteRenderer.sprite = sprite1;
-            } else {
-                spriteRenderer.sprite = sprite2;
+            // Wrap around to the first sprite if the end is reached
+            if (currentSpriteIndex >= sprites.Count)
+            {
+                currentSpriteIndex = 0;
             }
+
+            spriteRenderer.sprite = sprites[currentSpriteIndex];
         }
     }
 }
