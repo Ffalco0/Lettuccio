@@ -38,11 +38,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(RunMinigames());
     }
 
-    
-    async void Start()
-    {
-        await Login();
-    }
+    #if !UNITY_EDITOR   
+        async void Start()
+        {
+            await Login();
+        }
+    #endif
     
     
 
