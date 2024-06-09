@@ -15,6 +15,10 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     void Awake()
     {
         InitializeAds();
+    }
+
+    void Start()
+    {
         adsManager = GameObject.Find("Ads");
         interstitialAdScript = adsManager.GetComponent<InterstitialAd>();
         OnInitializationComplete();

@@ -21,8 +21,6 @@ public class BiscottoMovement : MonoBehaviour
     //GameManager Script
     public GameObject gameManagerObject;
     public GameManager gameManagerScript;
-
-    private float timer = 0f;
     void Start()
     {
         gameManagerObject = GameObject.Find("GameManager");

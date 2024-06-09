@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject startScreen;
     public GameObject loseScreen;
     public GameObject minigamesScreen;
-    public GameObject magazineScreen;
+    //public GameObject magazineScreen;
     public GameObject timerObj;
 
     //Login Variable
@@ -166,12 +166,6 @@ public class GameManager : MonoBehaviour
         minigamesScreen.SetActive(false);
         adPanelRevive.SetActive(false);
         loseScreen.SetActive(true);
-    }
-
-    public void LoadStory()
-    {
-        startScreen.SetActive(false);
-        magazineScreen.SetActive(true);
     }
 
     public void WinMinigame()
