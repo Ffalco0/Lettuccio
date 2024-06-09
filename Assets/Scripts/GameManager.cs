@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject startScreen;
     public GameObject loseScreen;
     public GameObject minigamesScreen;
+    public GameObject magazineScreen;
     public GameObject timerObj;
 
     //Login Variable
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     //ADS Manager
     public InterstitialAd adManager;
+    public GameObject adPanelRevive;
 
     void Awake()
     {
@@ -143,11 +145,33 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        StopAllCoroutines();
-        adManager.ShowAd();
+        Time.timeScale = 0f; // Stop Time
         isGameActive = false;
+        adPanelRevive.SetActive(true);
+    }
+
+    public void Revive()
+    {
+        adPanelRevive.SetActive(false);
+        #if !UNITY_EDITOR
+            adManager.ShowAd();
+        #endif
+        WinMinigame();
+    }
+
+    public void LoseGame()
+    {
+        StopAllCoroutines();
+        Time.timeScale = 1f;
         minigamesScreen.SetActive(false);
+        adPanelRevive.SetActive(false);
         loseScreen.SetActive(true);
+    }
+
+    public void LoadStory()
+    {
+        startScreen.SetActive(false);
+        magazineScreen.SetActive(true);
     }
 
     public void WinMinigame()
