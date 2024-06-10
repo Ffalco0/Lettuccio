@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 using Apple.GameKit;
 using System;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour
     public InterstitialAd adManager;
     public GameObject adPanelRevive;
 
+    //Points
+    public TextMeshProUGUI textComponent;
+    private int Points;
     void Awake()
     {
         // Start the coroutine
@@ -132,7 +136,7 @@ public class GameManager : MonoBehaviour
         isGameActive = true;
         startScreen.SetActive(false);
         minigamesScreen.SetActive(true);
-        
+        textComponent.text = Points.ToString();
         // Start the first minigame
         currentIndex = 0;
         ActivateMinigame(currentIndex);
@@ -166,6 +170,7 @@ public class GameManager : MonoBehaviour
         minigamesScreen.SetActive(false);
         adPanelRevive.SetActive(false);
         loseScreen.SetActive(true);
+        ResetPoints();
     }
 
     public void WinMinigame()
@@ -173,11 +178,22 @@ public class GameManager : MonoBehaviour
         DeactivateMinigame(currentIndex);
         timer = 0f; // Reset timer for the new minigame
         timebarImage.fillAmount = 0f; // Reset timebar for the new minigame
-
+        
+        AddPoints(60);
         // Pass to the next minigame
         currentIndex = (currentIndex + 1) % minigames.Length;
         
         ActivateMinigame(currentIndex);
+    }
+    private void AddPoints(int pointsToAdd)
+    {
+        Points += pointsToAdd;
+        textComponent.text = Points.ToString();
+    }
+    private void ResetPoints()
+    {
+        Points = 0;
+        textComponent.text = Points.ToString();
     }
 
     enum GameState
