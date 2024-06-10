@@ -2302,7 +2302,6 @@ MonoBehaviour:
   timerObj: {fileID: 194700855}
   adManager: {fileID: 1982037227}
   adPanelRevive: {fileID: 700045512}
-  textComponent: {fileID: 395113883}
 --- !u!4 &853192585
 Transform:
   m_ObjectHideFlags: 0
@@ -4024,7 +4023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1982037226
 Transform:
   m_ObjectHideFlags: 0
