@@ -14,12 +14,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     {
         InitializeAds();
     }
-<<<<<<< Updated upstream
-
-    
-=======
  
->>>>>>> Stashed changes
     public void InitializeAds()
     {
     #if UNITY_IOS
