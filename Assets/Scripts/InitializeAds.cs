@@ -8,16 +8,18 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     [SerializeField] bool _testMode = true;
     private string _gameId;
 
-    //Interstitial
-    private GameObject adsManager;
-    private InterstitialAd interstitialAdScript;
+    public InterstitialAd interstitialAd;
  
     void Awake()
     {
         InitializeAds();
     }
+<<<<<<< Updated upstream
 
     
+=======
+ 
+>>>>>>> Stashed changes
     public void InitializeAds()
     {
     #if UNITY_IOS
@@ -37,7 +39,6 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     public void OnInitializationComplete()
     {
         Debug.Log("Unity Ads initialization complete.");
-        interstitialAdScript.LoadAd();
     }
  
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)

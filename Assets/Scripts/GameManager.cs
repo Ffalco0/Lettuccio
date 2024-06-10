@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private bool isGameActive = false;
     public GameObject startScreen;
     public GameObject loseScreen;
+    public GameObject magazine;
     public GameObject minigamesScreen;
     //public GameObject magazineScreen;
     public GameObject timerObj;
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         // Start the coroutine
         StartCoroutine(RunMinigames());
+        adManager.LoadAd();
     }
 
     #if !UNITY_EDITOR   
@@ -75,8 +77,7 @@ public class GameManager : MonoBehaviour
                 timebarImage.fillAmount = timer / gameDuration;
                 yield return null;
             }
-            
-            Debug.Log("Time's up!");
+
             DeactivateMinigame(currentIndex);
 
             // Pass to the next minigame
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour
     {
         isGameActive = true;
         startScreen.SetActive(false);
+        magazine.SetActive(false);
         minigamesScreen.SetActive(true);
         textComponent.text = Points.ToString();
         // Start the first minigame
@@ -160,6 +162,8 @@ public class GameManager : MonoBehaviour
         #if !UNITY_EDITOR
             adManager.ShowAd();
         #endif
+        isGameActive = true;
+        Time.timeScale = 1f;
         WinMinigame();
     }
 
@@ -196,10 +200,8 @@ public class GameManager : MonoBehaviour
         textComponent.text = Points.ToString();
     }
 
-    enum GameState
+    public void SkipVideo()
     {
-        Menu,
-        Game,
-        Lose
+        StartSession();
     }
 }
