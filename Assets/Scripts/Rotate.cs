@@ -9,7 +9,15 @@ public class Rotate : MonoBehaviour
     // Constants for movement and sensitivity
     const float maxRotation = 15f; // Maximum rotation angle for the cone
     const float sensitivity = 5f; // Sensitivity for phone tilt to cone movement
-
+    public GameObject gameManagerObject;
+    public GameManager gameManagerScript;
+    
+    void Start ()
+    {
+        gameManagerObject = GameObject.Find("GameManager");
+        gameManagerScript = gameManagerObject.GetComponent<GameManager>();
+        gameManagerScript.hints.text = "Deep The Cookie!";
+    }
     void Update()
     {
         // Get the phone's gyroscope rotation

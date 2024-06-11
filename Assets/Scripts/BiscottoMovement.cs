@@ -28,6 +28,7 @@ public class BiscottoMovement : MonoBehaviour
         initialPosition = biscuit.position;
         spriteRenderer = biscuit.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = biscuitNORMALE;
+        gameManagerScript.hints.text = "Deep The Cookie!";
     }
 
     void Update()

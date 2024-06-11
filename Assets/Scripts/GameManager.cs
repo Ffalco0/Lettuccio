@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
     //Points
     public TextMeshProUGUI textComponent;
     private int Points;
+
+    public TextMeshProUGUI hints;
+    
     void Awake()
     {
         // Start the coroutine

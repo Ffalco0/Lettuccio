@@ -10,6 +10,7 @@ public class MonsterCollision : MonoBehaviour
     {
         gameManagerObject = GameObject.Find("GameManager");
         gameManagerScript = gameManagerObject.GetComponent<GameManager>();
+        gameManagerScript.hints.text = "Run Away From The Monster!";
     }
     private void OnCollisionEnter(Collision collision)
     {

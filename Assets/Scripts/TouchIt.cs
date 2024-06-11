@@ -7,6 +7,11 @@ public class TouchIt : MonoBehaviour
         // Layer mask for objects we want to consider for touch
     public LayerMask touchInputMask;
     public GameManager gameManager;
+     void Start ()
+    {
+        
+        gameManager.hints.text = "Deep The Cookie!";
+    }
     void Update()
     {
         // Check if the left mouse button is pressed
