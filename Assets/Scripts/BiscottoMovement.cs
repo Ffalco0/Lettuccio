@@ -18,6 +18,8 @@ public class BiscottoMovement : MonoBehaviour
     public Sprite biscuitROTTO;
     public Sprite biscuitNORMALE;
 
+    public Sprite biscuitBAGNATO;
+
     //GameManager Script
     public GameObject gameManagerObject;
     public GameManager gameManagerScript;
@@ -76,19 +78,19 @@ public class BiscottoMovement : MonoBehaviour
 
     void CheckResults()
     {
-        if(gameManagerScript.GetTime() < 5f)
+        if(gameManagerScript.GetTime() < 3f)
         {
             //ScpriteBiscotto DURO
             spriteRenderer.sprite = biscuitDURO;
         }
-        else if(gameManagerScript.GetTime() > 8.5f)
+        else if(gameManagerScript.GetTime() > 5f)
         {
             //ScpriteBiscotto ROTTO
             spriteRenderer.sprite = biscuitROTTO;
         }
         else
         {
-            spriteRenderer.sprite = biscuitNORMALE;
+            spriteRenderer.sprite = biscuitBAGNATO;
         }
 
         isDeeped = false;

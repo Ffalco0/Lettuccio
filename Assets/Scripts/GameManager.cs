@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     //Points
     public TextMeshProUGUI textComponent;
     private int Points;
+
     void Awake()
     {
         // Start the coroutine
@@ -171,6 +172,7 @@ public class GameManager : MonoBehaviour
         adPanelRevive.SetActive(false);
         loseScreen.SetActive(true);
         ResetPoints();
+        SubmitScoreToLeaderboard(Points);
     }
 
     public void WinMinigame()
@@ -195,6 +197,26 @@ public class GameManager : MonoBehaviour
         Points = 0;
         textComponent.text = Points.ToString();
     }
+
+    private async void SubmitScoreToLeaderboard(int score)
+    {
+        if (GKLocalPlayer.Local.IsAuthenticated)
+        {
+            var scoreReporter = new GKScore("your_leaderboard_id")
+            {
+                Value = score,
+                Context = 0 // Additional context information (if any), optional
+            };
+
+            await scoreReporter.ReportScoreAsync();
+            Debug.Log("Score submitted to leaderboard");
+        }
+        else
+        {
+            Debug.Log("Player is not authenticated");
+        }
+    }
+
 
     enum GameState
     {
