@@ -12,15 +12,22 @@ public class BiscottoMovement : MonoBehaviour
     private bool isReturning = false;
     private bool isTouched = false;
     private bool isDeeped = false;
+    public GameObject gocciaSpawnPoint;
     //Handle Sprite
     private SpriteRenderer spriteRenderer;
     public Sprite biscuitDURO;
     public Sprite biscuitROTTO;
     public Sprite biscuitNORMALE;
-
+    public Sprite biscuitBAGNATO;
     //GameManager Script
     public GameObject gameManagerObject;
+    public GameObject gocciaPrefab;
     public GameManager gameManagerScript;
+
+    // Timer for dipping
+    private float dippingTimer = 0f;
+    private bool isDipping = false;
+
     void Start()
     {
         gameManagerObject = GameObject.Find("GameManager");
@@ -29,6 +36,7 @@ public class BiscottoMovement : MonoBehaviour
         spriteRenderer = biscuit.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = biscuitNORMALE;
         gameManagerScript.hints.text = "Deep The Cookie!";
+        gocciaSpawnPoint = GameObject.FindWithTag("GocciaSpawn");
     }
 
     void Update()
@@ -63,6 +71,11 @@ public class BiscottoMovement : MonoBehaviour
             }
         }
 
+        // Update the dipping timer
+        if (isDipping)
+        {
+            dippingTimer += Time.deltaTime;
+        }
 
     }
 
@@ -71,27 +84,55 @@ public class BiscottoMovement : MonoBehaviour
         if (other.transform == glass)
         {
             isDeeped = true;
+            isDipping = true;
+            dippingTimer = 0f;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.transform == glass)
+        {
+            isDipping = false; // Stop the timer
         }
     }
 
 
     void CheckResults()
     {
-        if(gameManagerScript.GetTime() < 5f)
+        isDeeped = false;
+
+        if (dippingTimer < 3f)
         {
-            //ScpriteBiscotto DURO
+            // SpriteBiscotto DURO
             spriteRenderer.sprite = biscuitDURO;
         }
-        else if(gameManagerScript.GetTime() > 8.5f)
+        else if (dippingTimer > 5f)
         {
-            //ScpriteBiscotto ROTTO
+            // SpriteBiscotto ROTTO
             spriteRenderer.sprite = biscuitROTTO;
         }
         else
         {
-            spriteRenderer.sprite = biscuitNORMALE;
+            spriteRenderer.sprite = biscuitBAGNATO;
+            Debug.Log("YOU WIN");
+            StartCoroutine(SpawnGoccia());
         }
+    }
+    IEnumerator SpawnGoccia()
+    {
+        while (true)
+        {
+            if (gocciaSpawnPoint != null)
+            {
+                // Use the position of the GocciaSpawn point
+                Vector3 spawnPosition = new Vector3(gocciaSpawnPoint.transform.position.x, gocciaSpawnPoint.transform.position.y, gocciaSpawnPoint.transform.position.z);
 
-        isDeeped = false;
+                // Spawn a Goccia object at the calculated position
+                Instantiate(gocciaPrefab, spawnPosition, Quaternion.identity);
+            }
+
+            yield return new WaitForSeconds(1f); // Wait for 1 second before spawning the next Goccia
+        }
     }
 }
