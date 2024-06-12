@@ -6,11 +6,14 @@ public class TouchIt : MonoBehaviour
 {
         // Layer mask for objects we want to consider for touch
     public LayerMask touchInputMask;
-    public GameManager gameManager;
+
+    private GameObject gameManagerObject;
+    private GameManager gameManagerScript;
      void Start ()
     {
-        
-        gameManager.hints.text = "Touch the demonic sheep";
+        gameManagerObject = GameObject.Find("GameManager");
+        gameManagerScript = gameManagerObject.GetComponent<GameManager>();
+        gameManagerScript.hints.text = "Touch the demonic sheep";
     }
     void Update()
     {
@@ -30,10 +33,11 @@ public class TouchIt : MonoBehaviour
                 if (touchedObject.name == "BlackSheep")
                 {
                     Debug.Log("You Won!!!!");
-                    gameManager.WinMinigame();
-                } else
+                    gameManagerScript.WinMinigame();
+                } else if(gameManagerScript.GetTime() == 0)
                 {
                     Debug.Log("You Lose");
+                    gameManagerScript.EndGame();
                 }
             }
         }

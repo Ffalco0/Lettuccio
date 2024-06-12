@@ -28,20 +28,24 @@ public class BiscottoMovement : MonoBehaviour
     private float dippingTimer = 0f;
     private bool isDipping = false;
 
-    void Start()
+    private bool win = false;
+
+    void Awake()
     {
         gameManagerObject = GameObject.Find("GameManager");
         gameManagerScript = gameManagerObject.GetComponent<GameManager>();
-        initialPosition = biscuit.position;
         spriteRenderer = biscuit.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = biscuitNORMALE;
-        gameManagerScript.hints.text = "Deep The Cookie!";
-        gocciaSpawnPoint = GameObject.FindWithTag("GocciaSpawn");
+        gameManagerScript.hints.text = "Dip The Cookie!";
+        win = false;
+    }
+    void Start()
+    {
+        initialPosition = biscuit.position;
     }
 
     void Update()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             isTouched = true;
@@ -55,7 +59,6 @@ public class BiscottoMovement : MonoBehaviour
             {
                 CheckResults();
             }
-
         }
 
         if (isTouched && !isDeeped)
@@ -106,17 +109,24 @@ public class BiscottoMovement : MonoBehaviour
         {
             // SpriteBiscotto DURO
             spriteRenderer.sprite = biscuitDURO;
+            win = false;
+            StartCoroutine(ReturnAndEnd());
         }
         else if (dippingTimer > 5f)
         {
             // SpriteBiscotto ROTTO
             spriteRenderer.sprite = biscuitROTTO;
+            win = false;
+            StartCoroutine(ReturnAndEnd());
         }
         else
         {
             spriteRenderer.sprite = biscuitBAGNATO;
             Debug.Log("YOU WIN");
             StartCoroutine(SpawnGoccia());
+            spriteRenderer.sprite = biscuitNORMALE;
+            win = true;
+            StartCoroutine(ReturnAndEnd());
         }
     }
     IEnumerator SpawnGoccia()
@@ -132,7 +142,23 @@ public class BiscottoMovement : MonoBehaviour
                 Instantiate(gocciaPrefab, spawnPosition, Quaternion.identity);
             }
 
-            yield return new WaitForSeconds(1f); // Wait for 1 second before spawning the next Goccia
+            yield return new WaitForSeconds(0.5f); // Wait for 1 second before spawning the next Goccia
+        }
+    }
+    IEnumerator ReturnAndEnd()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2.5f); // Wait for 1 second before spawning the next Goccia
+            if(win)
+            {
+                gameManagerScript.WinMinigame();
+            }
+            else
+            {
+                gameManagerScript.EndGame();
+            }
+            
         }
     }
 }

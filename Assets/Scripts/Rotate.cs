@@ -40,5 +40,10 @@ public class Rotate : MonoBehaviour
                 // Handle game over logic here (e.g., reset scene, display score, etc.)
             }
         }
+
+        if(gameManagerScript.GetTime() == 0)
+        {
+            gameManagerScript.WinMinigame();
+        }
     }
 }
