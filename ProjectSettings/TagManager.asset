@@ -12,6 +12,7 @@ TagManager:
   - BiscottoBagnato
   - BiscottoRotto
   - gocciaspawn
+  - LaGocciaMuore
   layers:
   - Default
   - TransparentFX
