@@ -41,6 +41,15 @@ public class GameManager : MonoBehaviour
     private int Points;
 
     public TextMeshProUGUI hints;
+   
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+    
+    
+    
+    
+    
+
     
     void Awake()
     {
@@ -89,11 +98,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void ActivateMinigame(int index)
+   void ActivateMinigame(int index)
     {
         Debug.Log($"Activating minigame {index}");
         minigames[index].SetActive(true);
+        
     }
+
+
 
     void DeactivateMinigame(int index)
     {
@@ -144,7 +156,21 @@ public class GameManager : MonoBehaviour
         textComponent.text = Points.ToString();
         // Start the first minigame
         currentIndex = 0;
+
+        // Store the initial position and rotation
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+
         ActivateMinigame(currentIndex);
+    }
+
+    public void Reset()
+    {
+        // Reset position and rotation to the initial values
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        
+        // Add any other reset logic here, like resetting scores, states, etc.
     }
 
     public float GetTime()
