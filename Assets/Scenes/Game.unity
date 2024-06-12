@@ -590,7 +590,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &366302434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -640,7 +640,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &373962091
 RectTransform:
   m_ObjectHideFlags: 0
@@ -657,7 +657,6 @@ RectTransform:
   - {fileID: 4062955059444658181}
   - {fileID: 5734113611790746667}
   - {fileID: 2087874378}
-  - {fileID: 1060224653}
   - {fileID: 561514867}
   - {fileID: 1495236553}
   m_Father: {fileID: 1778670854}
@@ -2728,11 +2727,11 @@ Transform:
   m_GameObject: {fileID: 1060224652}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.98, y: 2.256, z: 0.25}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: -6.9399977, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 373962091}
+  m_Father: {fileID: 1217251503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1158853834
 GameObject:
@@ -2927,9 +2926,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: e3d189a2b1ce848b685458ced6618a58, type: 3}
     - target: {fileID: 4680721316147792027, guid: d3496fbf7e7ec4b8298fe680050edf09, type: 3}
+      propertyPath: gocciaPrefab
+      value: 
+      objectReference: {fileID: 1291786914656304772, guid: 1ebf7e2291766423183b968638d7c963, type: 3}
+    - target: {fileID: 4680721316147792027, guid: d3496fbf7e7ec4b8298fe680050edf09, type: 3}
+      propertyPath: biscuitBAGNATO
+      value: 
+      objectReference: {fileID: 21300000, guid: 1e354848f465641d3b0b372ec65c4d57, type: 3}
+    - target: {fileID: 4680721316147792027, guid: d3496fbf7e7ec4b8298fe680050edf09, type: 3}
       propertyPath: biscuitNORMALE
       value: 
       objectReference: {fileID: 21300000, guid: 99a9e0e9a0f2e4760aa387052e7cf122, type: 3}
+    - target: {fileID: 4680721316147792027, guid: d3496fbf7e7ec4b8298fe680050edf09, type: 3}
+      propertyPath: gocciaSpawnPoint
+      value: 
+      objectReference: {fileID: 1060224652}
     - target: {fileID: 5382406008141603510, guid: d3496fbf7e7ec4b8298fe680050edf09, type: 3}
       propertyPath: m_Name
       value: Biscotto
@@ -2976,7 +2987,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5446347863405792660, guid: d3496fbf7e7ec4b8298fe680050edf09, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1060224653}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3496fbf7e7ec4b8298fe680050edf09, type: 3}
 --- !u!4 &1217251503 stripped
@@ -3930,7 +3944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1778670854
 RectTransform:
   m_ObjectHideFlags: 0

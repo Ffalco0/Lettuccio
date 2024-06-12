@@ -4,6 +4,6 @@ public class GocciaCollision : MonoBehaviour
 {
     void Start()
     {
-        Destroy(gameObject, 0.9f);
+        Destroy(gameObject, 1.5f);
     }
 }
