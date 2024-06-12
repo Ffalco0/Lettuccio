@@ -10,7 +10,7 @@ public class TouchIt : MonoBehaviour
      void Start ()
     {
         
-        gameManager.hints.text = "Deep The Cookie!";
+        gameManager.hints.text = "Touch the demonic sheep";
     }
     void Update()
     {

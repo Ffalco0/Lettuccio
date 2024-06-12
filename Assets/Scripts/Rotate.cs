@@ -16,7 +16,7 @@ public class Rotate : MonoBehaviour
     {
         gameManagerObject = GameObject.Find("GameManager");
         gameManagerScript = gameManagerObject.GetComponent<GameManager>();
-        gameManagerScript.hints.text = "Deep The Cookie!";
+        gameManagerScript.hints.text = "Balance the icecream";
     }
     void Update()
     {

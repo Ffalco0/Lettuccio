@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2396632708016469479
+--- !u!114 &-7430768693005247841
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,7 +15,7 @@ MonoBehaviour:
   IsEnabled: 0
   AllowGetCurrentUser: 0
   AllowRunsAsCurrentUser: 0
---- !u!114 &-2108268913891799941
+--- !u!114 &-3734162409881797098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,10 +24,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6b8a8fe473224decaaecc9264d56e95, type: 3}
-  m_Name: AppleCoreBuildStep
+  m_Script: {fileID: 11500000, guid: 24e6011bb95664520aa4858e4c359e06, type: 3}
+  m_Name: AppleGameKitBuildStep
   m_EditorClassIdentifier: 
   IsEnabled: 1
+  FriendListUsageDescription: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,7 +50,20 @@ MonoBehaviour:
   AppUsesNonExemptEncryption: 0
   AutomateEntitlements: 1
   DefaultEntitlements: {fileID: 0}
---- !u!114 &2141439908688169774
+--- !u!114 &6042965950292275437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b8a8fe473224decaaecc9264d56e95, type: 3}
+  m_Name: AppleCoreBuildStep
+  m_EditorClassIdentifier: 
+  IsEnabled: 1
+--- !u!114 &8208169746129260784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,17 +97,3 @@ MonoBehaviour:
   AllowMusicReadWrite: 0
   AllowMoviesReadOnly: 0
   AllowMoviesReadWrite: 0
---- !u!114 &5177048772851009761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24e6011bb95664520aa4858e4c359e06, type: 3}
-  m_Name: AppleGameKitBuildStep
-  m_EditorClassIdentifier: 
-  IsEnabled: 1
-  FriendListUsageDescription: 
