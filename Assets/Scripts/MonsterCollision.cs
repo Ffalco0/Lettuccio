@@ -11,18 +11,25 @@ public class MonsterCollision : MonoBehaviour
     {
         gameManagerObject = GameObject.Find("GameManager");
         gameManagerScript = gameManagerObject.GetComponent<GameManager>();
-        gameManagerScript.hints.text = "Run Away From The Monster!";
+       
     }
     void Update()
     {
+         gameManagerScript.hints.text = "Run Away From The Monster!";
         transform.Translate(Vector3.down * speed * Time.deltaTime);
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Raccoon") || gameManagerScript.GetTime() == 0)
+        if (collision.gameObject.CompareTag("Raccoon"))
         {
-            Debug.Log("Raccoon collided with Monster!");
-            gameManagerScript.EndGame();
+            if(!gameManagerScript.GetWathcedAds())
+            {
+                gameManagerScript.EndGame();
+            }
+            else
+            {
+                gameManagerScript.LoseGame();
+            }
         }
     }
 }

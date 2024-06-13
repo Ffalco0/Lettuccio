@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using UnityEngine;
 
 public class Rotate : MonoBehaviour
@@ -12,19 +13,44 @@ public class Rotate : MonoBehaviour
     public GameObject gameManagerObject;
     public GameManager gameManagerScript;
     
+    private Vector3 initialConePosition;
+    private Quaternion initialConeRotation;
+    private Vector3[] initialScoopPositions;
+    private Quaternion[] initialScoopRotations;
+
     void Start ()
     {
         gameManagerObject = GameObject.Find("GameManager");
         gameManagerScript = gameManagerObject.GetComponent<GameManager>();
-        gameManagerScript.hints.text = "Balance the icecream";
+
+        // Store initial positions and rotations
+        initialConePosition = cone.transform.position;
+        initialConeRotation = cone.transform.rotation;
+        initialScoopPositions = new Vector3[scoops.Length];
+        initialScoopRotations = new Quaternion[scoops.Length];
+        for (int i = 0; i < scoops.Length; i++)
+        {
+            initialScoopPositions[i] = scoops[i].transform.position;
+            initialScoopRotations[i] = scoops[i].transform.rotation;
+        }
+
+        // Initialize the gyroscope
+        if (SystemInfo.supportsGyroscope)
+        {
+            Input.gyro.enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning("Gyroscope not supported on this device.");
+        }
+        ResetMinigame(); 
+
     }
     void Update()
     {
+        gameManagerScript.hints.text = "Eat all the IceCream!";
         // Get the phone's gyroscope rotation
-        float tilt = -Input.gyro.rotationRate.y * sensitivity;
-
-        // Limit the tilt to avoid exceeding the maximum rotation
-        tilt = Mathf.Clamp(tilt, -maxRotation, maxRotation);
+        float tilt = GetTiltAmount();
 
         // Rotate the cone based on the tilt
         cone.transform.Rotate(0f, 0f, -tilt);
@@ -33,17 +59,49 @@ public class Rotate : MonoBehaviour
         foreach (GameObject scoop in scoops)
         {
             // Check if the scoop's position is below the cone's base
-            if (scoop.transform.position.y < cone.transform.position.y)
+            if (scoop.transform.position.y < cone.transform.position.y * 2)
             {
-                // Game Over if a scoop falls
-                Debug.Log("Game Over! Scoop fell off.");
-                // Handle game over logic here (e.g., reset scene, display score, etc.)
+                gameManagerScript.WinMinigame();
+                ResetMinigame();   
             }
         }
+    
+    }
+      float GetTiltAmount()
+    {
+        // Default tilt to 0 if gyroscope is not available
+        float tilt = 0f;
 
-        if(gameManagerScript.GetTime() == 0)
+        // Calculate tilt only if gyroscope is enabled and supported
+        if (SystemInfo.supportsGyroscope && Input.gyro.enabled)
         {
-            gameManagerScript.WinMinigame();
+            // Get the phone's gyroscope rotation
+            tilt = -Input.gyro.rotationRate.y * sensitivity;
+
+            // Clamp the tilt to avoid exceeding the maximum rotation
+            tilt = Mathf.Clamp(tilt, -maxRotation, maxRotation);
+        }
+
+        return tilt;
+    }
+
+     void ResetMinigame()
+    {
+        // Reset cone to its initial position and rotation
+        cone.transform.position = initialConePosition;
+        cone.transform.rotation = initialConeRotation;
+
+        // Reset scoops to their initial positions and rotations
+        for (int i = 0; i < scoops.Length; i++)
+        {
+            scoops[i].transform.position = initialScoopPositions[i];
+            scoops[i].transform.rotation = initialScoopRotations[i];
+
+            // Re-enable scoops if they were destroyed
+            if (!scoops[i].activeSelf)
+            {
+                scoops[i].SetActive(true);
+            }
         }
     }
 }

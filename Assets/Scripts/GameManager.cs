@@ -42,16 +42,31 @@ public class GameManager : MonoBehaviour
     private int Points;
 
     public TextMeshProUGUI hints;
+    public TextMeshProUGUI totalPoints;
 
 
     public Image imageBackgorund;
     public List<Sprite> background;
+
+    private bool isActive = true;
+
+    private bool watchedAds = false;
+
+
+    public bool GetActive()
+    {
+        return isActive;
+    }
+
+    public void SetActivation(bool active)
+    {
+        isActive = active;
+    }
     
     void Awake()
     {
         // Start the coroutine
         StartCoroutine(RunMinigames());
-        adManager.LoadAd();
     }
 
     #if !UNITY_EDITOR   
@@ -60,10 +75,39 @@ public class GameManager : MonoBehaviour
             await Login();
         }
     #endif
-    
 
-    
+    void Update()
+    {
+        if(timer >= gameDuration)
+        {
+           CheckLose();
+           timer = 0;
+        }
+    }
+    void CheckLose()
+    {
+         if(!watchedAds)
+        {
+            Debug.Log("Watch ads");
+            EndGame();            
+        }
+        else
+        {
+            LoseGame();
+        }
 
+    }
+    public void ShowLeaderboard()
+    {
+        if (Social.localUser.authenticated)
+        {
+            Social.ShowLeaderboardUI();
+        }
+        else
+        {
+            Debug.Log("User is not authenticated with Game Center.");
+        }
+    }
     IEnumerator RunMinigames()
     {
         while (!isGameActive)
@@ -146,6 +190,7 @@ public class GameManager : MonoBehaviour
         isGameActive = true;
         startScreen.SetActive(false);
         magazine.SetActive(false);
+        ResetPoints();
         minigamesScreen.SetActive(true);
         textComponent.text = Points.ToString();
         // Start the first minigame
@@ -163,27 +208,33 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f; // Stop Time
         isGameActive = false;
         adPanelRevive.SetActive(true);
+        watchedAds = true;
     }
 
     public void Revive()
     {
+        adManager.ShowAd();
+    }
+
+    public void ContinuePlaying()
+    {
+        watchedAds = true;
+        timer = 0;
         adPanelRevive.SetActive(false);
-        #if !UNITY_EDITOR
-            adManager.ShowAd();
-        #endif
-        isGameActive = true;
         Time.timeScale = 1f;
+        isGameActive = true;
         WinMinigame();
     }
 
     public void LoseGame()
     {
+        totalPoints.text = "Total Points: " + Points.ToString();
+        ReportScore(Points);
         StopAllCoroutines();
         Time.timeScale = 1f;
         minigamesScreen.SetActive(false);
         adPanelRevive.SetActive(false);
         loseScreen.SetActive(true);
-        ResetPoints();
     }
 
     public void WinMinigame()
@@ -210,9 +261,35 @@ public class GameManager : MonoBehaviour
         Points = 0;
         textComponent.text = Points.ToString();
     }
+    public string leaderboardID = "12BedDuccio";
+    public void ReportScore(long score)
+    {
+        if (Social.localUser.authenticated)
+        {
+            Social.ReportScore(score, leaderboardID, success =>
+            {
+                if (success)
+                {
+                    Debug.Log("Score reported successfully.");
+                }
+                else
+                {
+                    Debug.Log("Failed to report score.");
+                }
+            });
+        }
+        else
+        {
+            Debug.Log("User is not authenticated. Cannot report score.");
+        }
+    }
 
     public void SkipVideo()
     {
         StartSession();
+    }
+    public bool GetWathcedAds()
+    {
+        return watchedAds;
     }
 }

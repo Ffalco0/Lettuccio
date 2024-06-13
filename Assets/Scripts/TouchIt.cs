@@ -13,10 +13,11 @@ public class TouchIt : MonoBehaviour
     {
         gameManagerObject = GameObject.Find("GameManager");
         gameManagerScript = gameManagerObject.GetComponent<GameManager>();
-        gameManagerScript.hints.text = "Touch the demonic sheep";
+        
     }
     void Update()
     {
+        gameManagerScript.hints.text = "Touch the demonic sheep";
         // Check if the left mouse button is pressed
         if (Input.GetMouseButton(0))
         {
@@ -34,11 +35,7 @@ public class TouchIt : MonoBehaviour
                 {
                     Debug.Log("You Won!!!!");
                     gameManagerScript.WinMinigame();
-                } else if(gameManagerScript.GetTime() == 0)
-                {
-                    Debug.Log("You Lose");
-                    gameManagerScript.EndGame();
-                }
+                } 
             }
         }
     }

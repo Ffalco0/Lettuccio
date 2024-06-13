@@ -36,7 +36,6 @@ public class BiscottoMovement : MonoBehaviour
         gameManagerScript = gameManagerObject.GetComponent<GameManager>();
         spriteRenderer = biscuit.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = biscuitNORMALE;
-        gameManagerScript.hints.text = "Dip The Cookie!";
         win = false;
     }
     void Start()
@@ -46,40 +45,64 @@ public class BiscottoMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        gameManagerScript.hints.text = "Dip The Cookie!";
+        // Check for mouse inputs and update states
+        HandleMouseInput();
+
+        // Handle biscuit movement
+        HandleBiscuitMovement();
+
+        // Update the dipping timer if active
+        if (gameManagerScript.GetActive())
         {
-            isTouched = true;
-            isReturning = false;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            isTouched = false;
-            isReturning = true;
-            if(isDeeped)
-            {
-                CheckResults();
-            }
+            dippingTimer += Time.deltaTime;
         }
 
+    }
+
+    void HandleMouseInput()
+    {
+        if (gameManagerScript.GetActive())
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                isTouched = true;
+                isReturning = false;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                isTouched = false;
+                isReturning = true;
+
+                if (isDeeped)
+                {
+                    CheckResults();
+                }
+            }
+        }
+    }
+
+    void HandleBiscuitMovement()
+    {
         if (isTouched && !isDeeped)
         {
-            biscuit.position = Vector3.MoveTowards(biscuit.position, glass.position, speed * Time.deltaTime);
+            MoveBiscuitTowards(glass.position);
         }
         else if (isReturning)
         {
-            biscuit.position = Vector3.MoveTowards(biscuit.position, initialPosition, speed * Time.deltaTime);
+            MoveBiscuitTowards(initialPosition);
+
+            // Stop returning once it reaches the initial position
             if (biscuit.position == initialPosition)
             {
                 isReturning = false;
             }
         }
+    }
 
-        // Update the dipping timer
-        if (isDipping)
-        {
-            dippingTimer += Time.deltaTime;
-        }
-
+    void MoveBiscuitTowards(Vector3 targetPosition)
+    {
+        biscuit.position = Vector3.MoveTowards(biscuit.position, targetPosition, speed * Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider other)
@@ -103,16 +126,16 @@ public class BiscottoMovement : MonoBehaviour
 
     void CheckResults()
     {
+        gameManagerScript.SetActivation(false);
         isDeeped = false;
-
-        if (dippingTimer < 3f)
+        if (dippingTimer < 1.5f)
         {
             // SpriteBiscotto DURO
             spriteRenderer.sprite = biscuitDURO;
             win = false;
             StartCoroutine(ReturnAndEnd());
         }
-        else if (dippingTimer > 5f)
+        else if (dippingTimer > 4f)
         {
             // SpriteBiscotto ROTTO
             spriteRenderer.sprite = biscuitROTTO;
@@ -124,41 +147,47 @@ public class BiscottoMovement : MonoBehaviour
             spriteRenderer.sprite = biscuitBAGNATO;
             Debug.Log("YOU WIN");
             StartCoroutine(SpawnGoccia());
-            spriteRenderer.sprite = biscuitNORMALE;
             win = true;
             StartCoroutine(ReturnAndEnd());
         }
     }
-    IEnumerator SpawnGoccia()
+   IEnumerator SpawnGoccia()
     {
-        while (true)
+        int spawnCount = 0; // Add a counter to limit the number of spawns
+        while (spawnCount < 4) // Adjust this condition based on your game design
         {
             if (gocciaSpawnPoint != null)
             {
-                // Use the position of the GocciaSpawn point
-                Vector3 spawnPosition = new Vector3(gocciaSpawnPoint.transform.position.x, gocciaSpawnPoint.transform.position.y, gocciaSpawnPoint.transform.position.z);
-
-                // Spawn a Goccia object at the calculated position
+                Vector3 spawnPosition = gocciaSpawnPoint.transform.position;
                 Instantiate(gocciaPrefab, spawnPosition, Quaternion.identity);
             }
-
-            yield return new WaitForSeconds(0.5f); // Wait for 1 second before spawning the next Goccia
+            spawnCount++;
+            yield return new WaitForSeconds(0.2f);
         }
     }
+
     IEnumerator ReturnAndEnd()
     {
-        while (true)
+        yield return new WaitForSeconds(2.5f); // This is fine as it waits once
+        if (win)
         {
-            yield return new WaitForSeconds(2.5f); // Wait for 1 second before spawning the next Goccia
-            if(win)
-            {
-                gameManagerScript.WinMinigame();
-            }
-            else
+            gameManagerScript.SetActivation(true);
+            gameManagerScript.WinMinigame();
+        }
+        else
+        {
+            gameManagerScript.SetActivation(true);
+            if(!gameManagerScript.GetWathcedAds())
             {
                 gameManagerScript.EndGame();
             }
+            else
+            {
+                gameManagerScript.LoseGame();
+            }
             
         }
+         spriteRenderer.sprite = biscuitNORMALE;
     }
+
 }

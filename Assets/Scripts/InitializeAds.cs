@@ -22,7 +22,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     #elif UNITY_ANDROID
             _gameId = _androidGameId;
     #elif UNITY_EDITOR
-            _gameId = _androidGameId; //Only for testing the functionality in the Editor
+            _gameId = _iOSGameId; //Only for testing the functionality in the Editor
     #endif
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
@@ -34,6 +34,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     public void OnInitializationComplete()
     {
         Debug.Log("Unity Ads initialization complete.");
+        interstitialAd.LoadAd();
     }
  
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
